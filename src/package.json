@@ -1,0 +1,22 @@
+{
+  "name": "rainfall-monitor",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Your Name",
+  "license": "ISC",
+  "description": "Rainfall monitoring web application",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.21.0",
+    "hbs": "^4.2.0",
+    "mongoose": "^8.6.2",
+    "mqtt": "^5.10.1",
+    "socket.io": "^4.7.5"
+  }
+}

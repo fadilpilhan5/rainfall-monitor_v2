@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rainfall Monitoring</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 100%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .chart-container {
+            width: 100%;
+            max-width: 800px; /* Set a max-width for larger screens */
+            height: 400px; /* Set height for the chart */
+        }
+        h1 {
+            color: #007bff;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .navbar-custom {
+            background-color: #007bff; /* Warna biru untuk navbar */
+        }
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: white !important; /* Teks menjadi putih */
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px; /* Ukuran font lebih kecil */
+                padding: 10px;   /* Padding lebih kecil */
+            }
+
+            h1 {
+                font-size: 24px; /* Heading lebih kecil */
+            }
+
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .chart-container {
+                width: 100%; /* Pastikan chart memenuhi lebar layar pada ponsel */
+                height: 300px; /* Tinggi yang lebih kecil untuk ponsel */
+            }
+
+            canvas {
+                max-width: 100%;
+                height: auto; /* Grafik menyesuaikan dengan ukuran layar */
+            }
+
+            .btn-primary {
+                padding: 10px 20px; /* Ukuran tombol lebih kecil */
+                font-size: 14px;
+            }
+
+            .navbar-brand {
+                font-size: 18px; /* Ukuran lebih kecil */
+            }
+            .navbar-nav .nav-link {
+                font-size: 14px; /* Link lebih kecil */
+                padding: 5px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <a class="navbar-brand" href="#">
+            <img src="\public\images\Logo_BMKG_(2010).png" alt="Logo" width="35" height="35" class="d-inline-block align-top">
+            Rainfall Monitoring
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+               
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <h1 class="text-center">Rainfall Monitoring Dashboard</h1>
+        
+        <!-- Display Total Rainfall -->
+        <div class="text-center">
+            <h3>Curah Hujan Hari Ini: <span id="totalRainfall">Waiting for data...</span> mm</h3>
+        </div>
+
+        <!-- Chart for Historical Rainfall Data -->
+        <div class="chart-container mt-5">
+            <canvas id="historicalRainfallChart"></canvas>
+        </div>
+
+        <!-- Button for Refreshing Data -->
+        <div class="text-center mt-4">
+            <button id="refreshData" class="btn btn-primary">Refresh Data</button>
+        </div>
+
+        <div class="text-center mt-4">
+            <label for="timeRange">Pilih rentang waktu:</label>
+            <select id="timeRange">
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
+            </select>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
