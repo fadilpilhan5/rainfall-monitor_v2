@@ -3,13 +3,17 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Your Name",
   "license": "ISC",
   "description": "Rainfall monitoring web application",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fadilpilhan5/rainfall-monitor_v2.git"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -20,3 +24,4 @@
     "socket.io": "^4.7.5"
   }
 }
+
